@@ -3,10 +3,10 @@ FROM python:3.6-slim
 RUN apt-get update
 RUN apt-get -y install git
 
-RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-core.git#egg=benchsuite.core
-RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-rest.git#egg=benchsuite.rest
-RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-backends.git#egg=benchsuite.backends
-RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-stdlib.git#egg=benchsuite.stdlib
+RUN pip install git+https://github.com/benchmarking-suite/benchsuite-core.git#egg=benchsuite.core
+RUN pip install git+https://github.com/benchmarking-suite/benchsuite-rest.git#egg=benchsuite.rest
+RUN pip install git+https://github.com/benchmarking-suite/benchsuite-backends.git#egg=benchsuite.backends
+RUN pip install git+https://github.com/benchmarking-suite/benchsuite-stdlib.git#egg=benchsuite.stdlib
 
 EXPOSE 5000
 
