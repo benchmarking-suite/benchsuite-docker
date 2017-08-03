@@ -4,12 +4,10 @@ RUN apt-get update
 RUN apt-get -y install git
 
 RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-core.git#egg=benchsuite.core
-RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-rest.git#egg=benchsuite.rest
+RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-cli.git#egg=benchsuite.cli
 RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-backends.git#egg=benchsuite.backends
 RUN pip install -e git+https://github.com/benchmarking-suite/benchsuite-stdlib.git#egg=benchsuite.stdlib
 
-EXPOSE 5000
-
 ENV BENCHSUITE_CONFIG_FOLDER /
 
-ENTRYPOINT ["benchsuite-rest", "run"]
+ENTRYPOINT ["benchsuite", "-vvv", "multiexec", "-p", "provider"]
