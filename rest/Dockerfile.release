@@ -1,5 +1,8 @@
 FROM python:3.6-slim
 
+MAINTAINER Gabriele Giammatteo <gabriele.giammatteo@eng.it>
+
+
 RUN pip install benchsuite.core==2.0.0b6 benchsuite.rest==2.0.0b4 benchsuite.backends==2.0.0b0 benchsuite.stdlib==2.0.0b5
 EXPOSE 5000
 

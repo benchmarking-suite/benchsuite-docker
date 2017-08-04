@@ -1,5 +1,8 @@
 FROM python:3.6-slim
 
+MAINTAINER Gabriele Giammatteo <gabriele.giammatteo@eng.it>
+
+
 RUN apt-get update
 RUN apt-get -y install git
 
