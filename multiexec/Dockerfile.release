@@ -11,4 +11,4 @@ RUN pip install benchsuite.core==2.0.0b6 benchsuite.cli==2.0.0b7 benchsuite.back
 
 ENV BENCHSUITE_CONFIG_FOLDER /
 
-ENTRYPOINT ["benchsuite", "-vvv", "multiexec", "-p", "provider"]
+ENTRYPOINT ["benchsuite", "-vvv", "multiexec"]

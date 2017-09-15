@@ -17,4 +17,4 @@ RUN pip install git+https://github.com/benchmarking-suite/benchsuite-stdlib.git#
 
 ENV BENCHSUITE_CONFIG_FOLDER /
 
-ENTRYPOINT ["benchsuite", "-vvv", "multiexec", "-p", "provider"]
+ENTRYPOINT ["benchsuite", "-vvv", "multiexec"]
