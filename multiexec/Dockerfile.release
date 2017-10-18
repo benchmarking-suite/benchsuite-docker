@@ -6,7 +6,7 @@ MAINTAINER Gabriele Giammatteo <gabriele.giammatteo@eng.it>
 RUN apt-get update
 RUN apt-get -y install git
 
-RUN pip install benchsuite.core==2.1.0 benchsuite.cli==2.1.0 benchsuite.backends==2.1.0 benchsuite.stdlib==2.1.0
+RUN pip install benchsuite.core==2.2.0 benchsuite.cli==2.1.0 benchsuite.backends==2.1.0 benchsuite.stdlib==2.2.0
 
 
 ENV BENCHSUITE_CONFIG_FOLDER /
