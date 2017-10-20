@@ -3,7 +3,7 @@ FROM python:3.6-slim
 MAINTAINER Gabriele Giammatteo <gabriele.giammatteo@eng.it>
 
 
-RUN pip install benchsuite.core==2.2.0 benchsuite.rest==2.2.1 benchsuite.backends==2.1.0 benchsuite.stdlib==2.2.0
+RUN pip install benchsuite.core==2.2.1 benchsuite.rest==2.2.2 benchsuite.backends==2.1.0 benchsuite.stdlib==2.2.1
 EXPOSE 5000
 
 ENV BENCHSUITE_CONFIG_FOLDER /
