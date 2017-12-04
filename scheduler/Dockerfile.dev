@@ -1,4 +1,4 @@
-FROM python:3.7.0a2-slim
+FROM python:3.6-slim
 
 MAINTAINER Gabriele Giammatteo <gabriele.giammatteo@eng.it>
 
