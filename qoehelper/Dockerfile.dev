@@ -1,18 +1,34 @@
 FROM jetty:9
 MAINTAINER Gabriele Giammatteo <gabriele.giammatteo@eng.it>
 
-ENV appLocation $JETTY_BASE/webapps/qoehelper
-
-# TODO: retrieve version from repository and/or github
-ENV appVersion 0.0.2-SNAPSHOT
-
 USER root
 RUN apt-get -y update
 RUN apt-get -y install maven
 USER jetty
 
-ADD pom.xml pom.xml
+
+
+#  since the wget of the pom.xml would be cached, add this line that generates a random content to add to the container and
+#  invalidates all the steps that follows
+ADD https://www.random.org/strings/?num=16&len=16&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new uuid
+
+
+# extract the version from the current version in the pom.xml in GitHub
+# and store in qoehelper.version file (the best solution would be to add it in an environment variable)
+RUN wget https://raw.githubusercontent.com/benchmarking-suite/benchsuite-qoe-helper/master/pom.xml -Ogithub.pom.xml \
+    && mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dmaven.repo.local=/tmp -Dexpression=project.version -f github.pom.xml > version.tmp \
+    && cat version.tmp | grep '^[0-9]*\.[0-9]*\.[0-9]' > qoehelper.version \
+    && rm version.tmp github.pom.xml \
+    && rm -rf /tmp/*
+
+ENV appLocation $JETTY_BASE/webapps/qoehelper
 RUN mkdir ${appLocation}
-RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:unpack -Dmaven.repo.local=/tmp -DoutputDirectory=${appLocation} -DqoeHelperVersion=${appVersion} && rm -rf /tmp/* target
-RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:copy-dependencies -Dmaven.repo.local=/tmp -DoutputDirectory=${appLocation}/WEB-INF/lib -DexcludeArtifactIds=benchsuite-qoe_helper -DqoeHelperVersion= ${appVersion} && rm -rf /tmp/* target
+ADD pom.xml pom.xml
+
+RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:unpack -Dmaven.repo.local=/tmp -DoutputDirectory=${appLocation} -DqoeHelperVersion=`cat qoehelper.version` \
+    && mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:copy-dependencies -Dmaven.repo.local=/tmp -DoutputDirectory=${appLocation}/WEB-INF/lib -DexcludeArtifactIds=benchsuite-qoe_helper -DqoeHelperVersion=`cat qoehelper.version` \
+    && rm -rf /tmp/* target
+
 RUN rm pom.xml
+
+
