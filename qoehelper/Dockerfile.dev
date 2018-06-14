@@ -21,6 +21,7 @@ RUN wget https://raw.githubusercontent.com/benchmarking-suite/benchsuite-qoe-hel
     && rm version.tmp github.pom.xml \
     && rm -rf /tmp/*
 
+RUN echo "QoE Helper version is `cat qoehelper.version`"
 ENV appLocation $JETTY_BASE/webapps/qoehelper
 RUN mkdir ${appLocation}
 ADD pom.xml pom.xml
