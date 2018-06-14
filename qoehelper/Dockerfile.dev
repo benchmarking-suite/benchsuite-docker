@@ -1,0 +1,18 @@
+FROM jetty:9
+MAINTAINER Gabriele Giammatteo <gabriele.giammatteo@eng.it>
+
+ENV appLocation $JETTY_BASE/webapps/qoehelper
+
+# TODO: retrieve version from repository and/or github
+ENV appVersion 0.0.1-SNAPSHOT
+
+USER root
+RUN apt-get -y update
+RUN apt-get -y install maven
+USER jetty
+
+ADD pom.xml pom.xml
+RUN mkdir ${appLocation}
+RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:unpack -Dmaven.repo.local=/tmp -DoutputDirectory=${appLocation} -DqoeHelperVersion=${appVersion} && rm -rf /tmp/* target
+RUN mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:copy-dependencies -Dmaven.repo.local=/tmp -DoutputDirectory=${appLocation}/WEB-INF/lib -DexcludeArtifactIds=benchsuite-qoe_helper -DqoeHelperVersion= ${appVersion} && rm -rf /tmp/* target
+RUN rm pom.xml

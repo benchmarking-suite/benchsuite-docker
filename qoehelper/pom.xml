@@ -1,0 +1,62 @@
+<!--
+    This pom defiens a fake project used with the Maven dependency plugin
+    to download the qoe-helper war and its dependenices jars.
+-->
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.example</groupId>
+  <artifactId>fakeproject</artifactId>
+  <version>1.0.0</version>
+  <repositories>
+  <repository>
+    <id>ggiammat-benchsuite</id>
+    <url>https://packagecloud.io/ggiammat/benchsuite/maven2</url>
+    <releases>
+      <enabled>true</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+  <dependencies>
+
+      <!-- used to copy dependencies -->
+      <dependency>
+          <groupId>org.benchsuite-qoe_helper</groupId>
+          <artifactId>benchsuite-qoe_helper</artifactId>
+          <version>${qoeHelperVersion}</version>
+          <type>pom</type>
+      </dependency>
+
+      <!-- used to download the war -->
+      <dependency>
+          <groupId>org.benchsuite-qoe_helper</groupId>
+          <artifactId>benchsuite-qoe_helper</artifactId>
+          <type>war</type>
+          <version>${qoeHelperVersion}</version>
+      </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <artifactItems>
+            <artifactItem>
+              <groupId>org.benchsuite-qoe_helper</groupId>
+              <artifactId>benchsuite-qoe_helper</artifactId>
+              <version>${qoeHelperVersion}</version>
+              <type>war</type>
+           </artifactItem>
+          </artifactItems>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
